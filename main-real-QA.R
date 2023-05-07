@@ -68,6 +68,3 @@ pp <- ggplot(data = Det_sum1, aes(x = Ind, y = Frequency)) +
   theme(strip.text.x = element_text(size = 20))
 print(pp)
 ###
-pdf('real-QA1.pdf',width =15 ,height = 5)
-print(pp)
-dev.off()

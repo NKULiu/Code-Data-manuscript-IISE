@@ -5,7 +5,7 @@ source("Functions.R")
 library(foreach)
 library(doParallel)
 #--------------setup-----------------#
-ns = 100
+ns = 8
 cod_OC = c('gaussian','t','gamma')
 cod_cov = c('ar','bd')
 cod_op = c(0.1);
@@ -13,8 +13,7 @@ cod_delta = 0.3
 df.temp1 <- data.frame()
 #---#
 tic = proc.time()
-num_cl <- detectCores()
-cl=makeCluster(num_cl)
+cl=makeCluster(8)
 registerDoParallel(cl)
 #---#
  for(ind.cov in 1:length(cod_cov)){
@@ -148,13 +147,6 @@ registerDoParallel(cl)
       }
       dfmat1=cbind(Res1,mat_set1)
       colnames(dfmat1)=c('meanMS','meanFDP','meanTPP','sdMS','sdFDP','sdTPP',paras_name)
-      ##
-      filename=c()
-      for (i in 1:length(paras)){
-        temp=paste0(paras_name[i],'-',paras[i])
-        filename=paste0(filename,temp,sep='-')
-      }
-      print(paste0(filename,Sys.time(),sep='-'))
       df.temp1=rbind(df.temp1,dfmat1)
       }
      }

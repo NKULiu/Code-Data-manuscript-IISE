@@ -3,14 +3,13 @@ setwd("C:/Users/lyh/Desktop/Revision-IISE/Code&Data-II")
 source("Functions.R")
 library(foreach)
 library(doParallel)
-ns = 100
+ns=2
 cod_p=c(400,600)
 cod_op=c(30,60)
 cod_ncase=c(1,2)
 df.temp <- data.frame()
 #----#
-num_cl <- detectCores()
-cl=makeCluster(num_cl)
+cl=makeCluster(2)
 registerDoParallel(cl)
 for(ind.ncase in 1:length(cod_ncase)){
   for(ind.p in 1:length(cod_p)){
@@ -116,13 +115,6 @@ for(ind.ncase in 1:length(cod_ncase)){
       }
       dfmat=cbind(Res,mat_set)
       colnames(dfmat)=c('meanMS','meanFDP','meanTPP','sdMS','sdFDP','sdTPP',paras_name)
-      #-----#
-      filename=c()
-      for (i in 1:length(paras)){
-        temp=paste0(paras_name[i],'-',paras[i])
-        filename=paste0(filename,temp,sep='-')
-      }
-      print(paste0(filename,Sys.time(),sep='-'))
       df.temp=rbind(df.temp,dfmat)
     }
   }
